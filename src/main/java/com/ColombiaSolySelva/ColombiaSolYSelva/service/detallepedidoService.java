@@ -46,8 +46,6 @@ public class detallepedidoService implements IdetallepedidoService{
 
         if (detallepedidoExistente != null) {
             //Actualizar los campos del detalel pedido existente
-            detallepedidoExistente.setId_Producto_DTPedido(detallepedidoActualizado.getId_Producto_DTPedido());
-            detallepedidoExistente.setId_pedido_DTPedido(detallepedidoActualizado.getId_pedido_DTPedido());
             detallepedidoExistente.setCantidad_DTPedido(detallepedidoActualizado.getCantidad_DTPedido());
             detallepedidoExistente.setSubTotal_DTPedido(detallepedidoActualizado.getSubTotal_DTPedido());
             // Guardo el detalle pedido actualziado

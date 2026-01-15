@@ -1,12 +1,12 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 @Entity
 public class producto {
@@ -30,6 +30,12 @@ public class producto {
 
     @NotNull(message="Campo no puede estar vacío")
     private Integer stock_Producto;
+
+    //ONE TO MANY: Un producto puede estar en varios detalles de pedido
+    @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<detallepedido> detallepedido;
+
 
     public producto() {
     }

@@ -1,14 +1,14 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class pedidos {
@@ -22,9 +22,6 @@ public class pedidos {
     @NotNull(message="Campo no puede estar vacío")
     private Date fecha_Pedido;
 
-    @NotNull(message="Campo no puede estar vacío")
-    private Integer id_FK_Cliente_Pedido;
-
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
     private String transportadora_Pedido;
@@ -33,6 +30,17 @@ public class pedidos {
     @Size(max=20)
     private String No_Guia_Pedido;
 
+    //MANY TO ONE: Muchos pedidos pueden ser hechos por un cliente
+    @ManyToOne
+    @JoinColumn(name="id_FK_Cliente_Pedido")
+    @JsonBackReference
+    private cliente cliente;
+
+    //ONE TO MANY: Un pedido tiene muchos detalles de pedido
+    @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<detallepedido> detallepedido;
+
     public pedidos() {
     }
 
@@ -40,7 +48,6 @@ public class pedidos {
         this.id_Pedido = id_Pedido;
         this.valor_Pedido = valor_Pedido;
         this.fecha_Pedido = fecha_Pedido;
-        this.id_FK_Cliente_Pedido = id_FK_Cliente_Pedido;
         this.transportadora_Pedido = transportadora_Pedido;
         No_Guia_Pedido = no_Guia_Pedido;
     }
@@ -67,14 +74,6 @@ public class pedidos {
 
     public void setFecha_Pedido(Date fecha_Pedido) {
         this.fecha_Pedido = fecha_Pedido;
-    }
-
-    public Integer getId_FK_Cliente_Pedido() {
-        return id_FK_Cliente_Pedido;
-    }
-
-    public void setId_FK_Cliente_Pedido(Integer id_FK_Cliente_Pedido) {
-        this.id_FK_Cliente_Pedido = id_FK_Cliente_Pedido;
     }
 
     public String getTransportadora_Pedido() {

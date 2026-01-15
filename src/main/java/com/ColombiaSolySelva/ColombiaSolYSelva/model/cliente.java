@@ -1,9 +1,12 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 @Entity
 public class cliente {
@@ -37,6 +40,11 @@ public class cliente {
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
     private String ciudad_Cliente;
+
+    // ONE TO MANY: Un cliente puede tener muchos pedidos
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<pedidos> pedidos;
 
     public cliente() {
     }

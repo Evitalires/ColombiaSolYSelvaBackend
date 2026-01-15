@@ -1,9 +1,7 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -13,24 +11,28 @@ public class detallepedido {
     private Long id_DetallePedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Integer id_Producto_DTPedido;
-
-    @NotNull(message="Campo no puede estar vacío")
-    private Integer id_pedido_DTPedido;
-
-    @NotNull(message="Campo no puede estar vacío")
     private Integer cantidad_DTPedido;
 
     @NotNull(message="Campo no puede estar vacío")
     float subTotal_DTPedido;
+
+    //MANY TO ONE: Muchos detalles de pedido pueden estar en un pedido
+    @ManyToOne
+    @JoinColumn(name="id_pedido_DTPedido")
+    @JsonBackReference
+    private pedidos pedido;
+
+    //MANY TO ONE: Muchos detalles de pedido pueden contener un producto
+    @ManyToOne
+    @JoinColumn(name="id_Producto_DTPedido")
+    @JsonBackReference
+    private producto producto;
 
     public detallepedido() {
     }
 
     public detallepedido(Long id_DetallePedido, Integer id_Producto_DTPedido, Integer id_pedido_DTPedido, Integer cantidad_DTPedido, float subTotal_DTPedido) {
         this.id_DetallePedido = id_DetallePedido;
-        this.id_Producto_DTPedido = id_Producto_DTPedido;
-        this.id_pedido_DTPedido = id_pedido_DTPedido;
         this.cantidad_DTPedido = cantidad_DTPedido;
         this.subTotal_DTPedido = subTotal_DTPedido;
     }
@@ -41,22 +43,6 @@ public class detallepedido {
 
     public void setId_DetallePedido(Long id_DetallePedido) {
         this.id_DetallePedido = id_DetallePedido;
-    }
-
-    public Integer getId_Producto_DTPedido() {
-        return id_Producto_DTPedido;
-    }
-
-    public void setId_Producto_DTPedido(Integer id_Producto_DTPedido) {
-        this.id_Producto_DTPedido = id_Producto_DTPedido;
-    }
-
-    public Integer getId_pedido_DTPedido() {
-        return id_pedido_DTPedido;
-    }
-
-    public void setId_pedido_DTPedido(Integer id_pedido_DTPedido) {
-        this.id_pedido_DTPedido = id_pedido_DTPedido;
     }
 
     public Integer getCantidad_DTPedido() {
