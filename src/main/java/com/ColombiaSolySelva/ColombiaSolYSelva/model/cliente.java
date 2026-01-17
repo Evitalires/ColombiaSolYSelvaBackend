@@ -27,7 +27,7 @@ public class cliente {
     private String contrasena_Cliente;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Integer tel_Cliente;
+    private Long tel_Cliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
@@ -43,13 +43,13 @@ public class cliente {
 
     // ONE TO MANY: Un cliente puede tener muchos pedidos
     @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference ("cliente-pedido")
     private List<pedidos> pedidos;
 
     public cliente() {
     }
 
-    public cliente(Long id_Cliente, String nombre_cliente, String apellido_Cliente, String contrasena_Cliente, Integer tel_Cliente, String correo_Cliente, String direccion_Cliente, String ciudad_Cliente) {
+    public cliente(Long id_Cliente, String nombre_cliente, String apellido_Cliente, String contrasena_Cliente, Long tel_Cliente, String correo_Cliente, String direccion_Cliente, String ciudad_Cliente) {
         this.id_Cliente = id_Cliente;
         this.nombre_cliente = nombre_cliente;
         this.apellido_Cliente = apellido_Cliente;
@@ -92,11 +92,11 @@ public class cliente {
         this.contrasena_Cliente = contrasena_Cliente;
     }
 
-    public Integer getTel_Cliente() {
+    public Long getTel_Cliente() {
         return tel_Cliente;
     }
 
-    public void setTel_Cliente(Integer tel_Cliente) {
+    public void setTel_Cliente(Long tel_Cliente) {
         this.tel_Cliente = tel_Cliente;
     }
 

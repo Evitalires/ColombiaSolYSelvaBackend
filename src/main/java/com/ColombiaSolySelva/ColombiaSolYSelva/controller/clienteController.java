@@ -30,13 +30,13 @@ public class clienteController {
         return clienteService.obtenerPorId(id);
     }
 
-    @GetMapping("/crear")
+    @PostMapping("/crear")
     public ResponseEntity<String> guardarCliente(@RequestBody cliente cliente){
         clienteService.guardarCliente(cliente);
         return ResponseEntity.ok("Cliente agregado satisfactoriamente");
     }
 
-    @GetMapping("/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> deleteCliente(@PathVariable Long id){
         clienteService.deleteCliente(id);
         return ResponseEntity.ok("Cliente eliminado exitosamente");

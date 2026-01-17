@@ -1,7 +1,10 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva.controller;
 
+import com.ColombiaSolySelva.ColombiaSolYSelva.model.cliente;
 import com.ColombiaSolySelva.ColombiaSolYSelva.model.detallepedido;
+import com.ColombiaSolySelva.ColombiaSolYSelva.model.pedidos;
 import com.ColombiaSolySelva.ColombiaSolYSelva.service.detallepedidoService;
+import com.ColombiaSolySelva.ColombiaSolYSelva.service.pedidosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +32,15 @@ public class detallepedidoController {
         return detallepedidoService.obtenerPorId(id);
     }
 
-    @GetMapping("/crear")
-    public ResponseEntity<String> guardardetallePedido(@RequestBody detallepedido detallepedido){
-        detallepedidoService.guardardetallepedido(detallepedido);
+    @PostMapping("/pedido/{pedidoId}/detallepedido")
+    public ResponseEntity<String> crearDetallePedido(
+            @PathVariable Long pedidoId,
+            @RequestBody detallepedido detallepedido){
+        detallepedidoService.guardardetallepedido(pedidoId, detallepedido);
         return ResponseEntity.ok("Detalle Pedido agregado con éxito");
     }
 
-    @GetMapping("/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> deletedetallePedido(@PathVariable Long id){
         detallepedidoService.deletedetallepedido(id);
         return ResponseEntity.ok ("Detalle Pedido eliminado con éxito");
@@ -46,4 +51,6 @@ public class detallepedidoController {
         detallepedidoService.editardetallepedido(id, detallepedidoActualizado);
         return ResponseEntity.ok("Detalle Pedido agregado exitosamente");
     }
+
+
 }

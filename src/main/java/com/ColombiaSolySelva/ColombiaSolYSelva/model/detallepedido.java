@@ -14,12 +14,12 @@ public class detallepedido {
     private Integer cantidad_DTPedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    float subTotal_DTPedido;
+    private Float subTotal_DTPedido;
 
     //MANY TO ONE: Muchos detalles de pedido pueden estar en un pedido
     @ManyToOne
     @JoinColumn(name="id_pedido_DTPedido")
-    @JsonBackReference
+    @JsonBackReference ("pedido-detalle")
     private pedidos pedido;
 
     //MANY TO ONE: Muchos detalles de pedido pueden contener un producto
@@ -31,7 +31,7 @@ public class detallepedido {
     public detallepedido() {
     }
 
-    public detallepedido(Long id_DetallePedido, Integer id_Producto_DTPedido, Integer id_pedido_DTPedido, Integer cantidad_DTPedido, float subTotal_DTPedido) {
+    public detallepedido(Long id_DetallePedido, Integer id_Producto_DTPedido, Integer id_pedido_DTPedido, Integer cantidad_DTPedido, Float subTotal_DTPedido) {
         this.id_DetallePedido = id_DetallePedido;
         this.cantidad_DTPedido = cantidad_DTPedido;
         this.subTotal_DTPedido = subTotal_DTPedido;
@@ -53,12 +53,27 @@ public class detallepedido {
         this.cantidad_DTPedido = cantidad_DTPedido;
     }
 
-    public float getSubTotal_DTPedido() {
+    public Float getSubTotal_DTPedido() {
         return subTotal_DTPedido;
     }
 
-    public void setSubTotal_DTPedido(float subTotal_DTPedido) {
+    public void setSubTotal_DTPedido(Float subTotal_DTPedido) {
         this.subTotal_DTPedido = subTotal_DTPedido;
     }
 
+    public pedidos getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(pedidos pedido) {
+        this.pedido = pedido;
+    }
+
+    public producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(producto producto) {
+        this.producto = producto;
+    }
 }

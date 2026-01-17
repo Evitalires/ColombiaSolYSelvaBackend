@@ -30,22 +30,24 @@ public class pedidosController {
         return pedidosService.obtenerPorId(id);
     }
 
-    @GetMapping("/crear")
-    public ResponseEntity<String> pedidos(@RequestBody pedidos pedidos){
-        pedidosService.guardarPedidos(pedidos);
-        return ResponseEntity.ok("Detalle Pedido agregado con éxito");
+    @PostMapping("/cliente/{clienteId}/pedido")
+    public ResponseEntity<String> crearpedido(
+            @PathVariable Long clienteId,
+            @RequestBody pedidos pedido){
+        pedidosService.guardarPedidos(clienteId, pedido);
+        return ResponseEntity.ok("Pedido agregado con éxito");
     }
 
-    @GetMapping("/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> pedidosPedido(@PathVariable Long id){
         pedidosService.deletePedidos(id);
-        return ResponseEntity.ok ("Detalle Pedido eliminado con éxito");
+        return ResponseEntity.ok ("Pedido eliminado con éxito");
     }
 
     @PutMapping("/editar/{id}")
     public ResponseEntity<String> editarpedidos(@PathVariable Long id, @RequestBody pedidos pedidosActualizado){
         pedidosService.editarPedidos(id, pedidosActualizado);
-        return ResponseEntity.ok("Detalle Pedido agregado exitosamente");
+        return ResponseEntity.ok("Pedido actualizado exitosamente");
     }
 }
 

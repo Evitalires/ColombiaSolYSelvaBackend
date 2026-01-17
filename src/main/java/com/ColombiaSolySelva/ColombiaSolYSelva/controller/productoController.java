@@ -30,22 +30,22 @@ public class productoController {
         return productoService.obtenerPorId(id);
     }
 
-    @GetMapping("/crear")
+    @PostMapping("/crear")
     public ResponseEntity<String> productos(@RequestBody producto productos){
         productoService.guardarProducto(productos);
-        return ResponseEntity.ok("Detalle Pedido agregado con éxito");
+        return ResponseEntity.ok("Producto agregado con éxito");
     }
 
-    @GetMapping("/borrar/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> pedidosProductos(@PathVariable Long id){
         productoService.deleteProducto(id);
-        return ResponseEntity.ok ("Detalle Pedido eliminado con éxito");
+        return ResponseEntity.ok ("Producto eliminado con éxito");
     }
 
     @PutMapping("/editar/{id}")
     public ResponseEntity<String> editarProductos(@PathVariable Long id, @RequestBody producto productoActualizado){
         productoService.editarProducto(id, productoActualizado);
-        return ResponseEntity.ok("Producto agregado exitosamente");
+        return ResponseEntity.ok("Producto editado exitosamente");
     }
 }
 

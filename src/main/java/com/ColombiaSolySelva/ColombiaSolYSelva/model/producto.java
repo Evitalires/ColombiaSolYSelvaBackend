@@ -19,7 +19,7 @@ public class producto {
     private String nombre_Producto;
 
     @NotNull(message="Campo no puede estar vacío")
-    float precio_Producto;
+    private Float precio_Producto;
 
     @NotBlank(message="Campo no puede estar vacío")
     private String descripcion_Producto;
@@ -40,7 +40,7 @@ public class producto {
     public producto() {
     }
 
-    public producto(Long id_Producto, String nombre_Producto, float precio_Producto, String descripcion_Producto, String categoria_Producto, Integer stock_Producto) {
+    public producto(Long id_Producto, String nombre_Producto, Float precio_Producto, String descripcion_Producto, String categoria_Producto, Integer stock_Producto) {
         this.id_Producto = id_Producto;
         this.nombre_Producto = nombre_Producto;
         this.precio_Producto = precio_Producto;
@@ -65,11 +65,11 @@ public class producto {
         this.nombre_Producto = nombre_Producto;
     }
 
-    public float getPrecio_Producto() {
+    public Float getPrecio_Producto() {
         return precio_Producto;
     }
 
-    public void setPrecio_Producto(float precio_Producto) {
+    public void setPrecio_Producto(Float precio_Producto) {
         this.precio_Producto = precio_Producto;
     }
 

@@ -13,10 +13,12 @@ import java.util.Optional;
 @Service
 public class pedidosService implements IpedidosService{
     private final IpedidosRepository pedidosRepository;
+    private final IclienteRepository iclienteRepository;
 
     @Autowired
-    public pedidosService(IpedidosRepository pedidosRepository) {
+    public pedidosService(IpedidosRepository pedidosRepository, IclienteRepository iclienteRepository) {
         this.pedidosRepository = pedidosRepository;
+        this.iclienteRepository = iclienteRepository;
     }
 
     @Override
@@ -30,8 +32,12 @@ public class pedidosService implements IpedidosService{
     }
 
     @Override
-    public void guardarPedidos(pedidos pedidos) {
-        pedidosRepository.save(pedidos);
+    public void guardarPedidos(Long clienteId, pedidos pedido) {
+        cliente cliente = iclienteRepository.findById(clienteId)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        pedido.setCliente(cliente);
+        pedidosRepository.save(pedido);
+
     }
 
     @Override
@@ -40,8 +46,8 @@ public class pedidosService implements IpedidosService{
     }
 
     @Override
-    public void editarPedidos(Long id, pedidos pedidoActualizado) {
-        pedidos pedidoExistente = pedidosRepository.findById(id).orElse(null);
+    public void editarPedidos(Long pedidoId, pedidos pedidoActualizado) {
+        pedidos pedidoExistente = pedidosRepository.findById(pedidoId).orElse(null);
 
         if (pedidoExistente != null) {
             //Actualizar los campos del pedido existente
@@ -53,7 +59,7 @@ public class pedidosService implements IpedidosService{
             // Guardo el pedido actualizado
             pedidosRepository.save(pedidoExistente);
         } else {
-            throw new RuntimeException("Pedido no encontrado con el id: " + id);
+            throw new RuntimeException("Pedido no encontrado con el id: " + pedidoId);
         }
     }
 }

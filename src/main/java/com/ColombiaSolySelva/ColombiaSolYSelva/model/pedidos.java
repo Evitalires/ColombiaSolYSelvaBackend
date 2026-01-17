@@ -2,6 +2,7 @@ package com.ColombiaSolySelva.ColombiaSolYSelva.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class pedidos {
     private Long id_Pedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    private float valor_Pedido;
+    private Float valor_Pedido;
 
     @NotNull(message="Campo no puede estar vacío")
     private Date fecha_Pedido;
@@ -28,28 +29,29 @@ public class pedidos {
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=20)
+    @JsonProperty("no_Guia_Pedido")
     private String No_Guia_Pedido;
 
     //MANY TO ONE: Muchos pedidos pueden ser hechos por un cliente
     @ManyToOne
     @JoinColumn(name="id_FK_Cliente_Pedido")
-    @JsonBackReference
+    @JsonBackReference ("cliente-pedido")
     private cliente cliente;
 
     //ONE TO MANY: Un pedido tiene muchos detalles de pedido
     @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference ("pedido-detalle")
     private List<detallepedido> detallepedido;
 
     public pedidos() {
     }
 
-    public pedidos(Long id_Pedido, float valor_Pedido, Date fecha_Pedido, Integer id_FK_Cliente_Pedido, String transportadora_Pedido, String no_Guia_Pedido) {
+    public pedidos(Long id_Pedido, Float valor_Pedido, Date fecha_Pedido, Integer id_FK_Cliente_Pedido, String transportadora_Pedido, String No_Guia_Pedido) {
         this.id_Pedido = id_Pedido;
         this.valor_Pedido = valor_Pedido;
         this.fecha_Pedido = fecha_Pedido;
         this.transportadora_Pedido = transportadora_Pedido;
-        No_Guia_Pedido = no_Guia_Pedido;
+        this.No_Guia_Pedido = No_Guia_Pedido;
     }
 
     public Long getId_Pedido() {
@@ -60,11 +62,11 @@ public class pedidos {
         this.id_Pedido = id_Pedido;
     }
 
-    public float getValor_Pedido() {
+    public Float getValor_Pedido() {
         return valor_Pedido;
     }
 
-    public void setValor_Pedido(float valor_Pedido) {
+    public void setValor_Pedido(Float valor_Pedido) {
         this.valor_Pedido = valor_Pedido;
     }
 
@@ -88,7 +90,13 @@ public class pedidos {
         return No_Guia_Pedido;
     }
 
-    public void setNo_Guia_Pedido(String no_Guia_Pedido) {
-        No_Guia_Pedido = no_Guia_Pedido;
+    public void setNo_Guia_Pedido(String No_Guia_Pedido) {
+        this.No_Guia_Pedido = No_Guia_Pedido;
+    }
+
+    public cliente getCliente() {return cliente;
+    }
+
+    public void setCliente(cliente cliente) {this.cliente = cliente;
     }
 }
