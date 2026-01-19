@@ -18,7 +18,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/cliente")
 public class clienteController {
-    private final clienteService clienteService;
+    @Autowired
+    private clienteService clienteService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -62,7 +63,7 @@ public class clienteController {
     @PostMapping("/loginConDTO")
     public ResponseEntity<String> loginConDTO(@RequestBody clienteDto clienteDto) {
         UserDetails userDetails = clienteService.loadUserByUsername(clienteDto.getcorreoCliente());
-        if (userDetails != null && passwordEncoder.matches(clienteDto.getcontrasena_Cliente(), userDetails.getPassword())) {
+        if (userDetails != null && passwordEncoder.matches(clienteDto.getcontrasenaCliente(), userDetails.getPassword())) {
             String token = jwtUtil.generateToken(userDetails.getUsername());
             return ResponseEntity.ok(token);
         }

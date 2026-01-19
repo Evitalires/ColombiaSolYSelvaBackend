@@ -12,35 +12,34 @@ import java.util.List;
 public class cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Cliente;
+    private Long idCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String nombre_cliente;
+    private String nombreCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String apellido_Cliente;
+    private String apellidoCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String contrasena_Cliente;
+    private String contrasenaCliente;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Long tel_Cliente;
+    private Long telCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    @Column(name="correo_Cliente")
     private String correoCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String direccion_Cliente;
+    private String direccionCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String ciudad_Cliente;
+    private String ciudadCliente;
 
     // ONE TO MANY: Un cliente puede tener muchos pedidos
     @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -50,55 +49,56 @@ public class cliente {
     public cliente() {
     }
 
-    public cliente(Long id_Cliente, String nombre_cliente, String apellido_Cliente, String contrasena_Cliente, Long tel_Cliente, String correoCliente, String direccion_Cliente, String ciudad_Cliente) {
-        this.id_Cliente = id_Cliente;
-        this.nombre_cliente = nombre_cliente;
-        this.apellido_Cliente = apellido_Cliente;
-        this.contrasena_Cliente = contrasena_Cliente;
-        this.tel_Cliente = tel_Cliente;
+    public cliente(Long idCliente, String nombreCliente, String apellidoCliente, String contrasenaCliente, Long telCliente, String correoCliente, String direccionCliente, String ciudadCliente, List<pedidos> pedidos) {
+        this.idCliente = idCliente;
+        this.nombreCliente = nombreCliente;
+        this.apellidoCliente = apellidoCliente;
+        this.contrasenaCliente = contrasenaCliente;
+        this.telCliente = telCliente;
         this.correoCliente = correoCliente;
-        this.direccion_Cliente = direccion_Cliente;
-        this.ciudad_Cliente = ciudad_Cliente;
+        this.direccionCliente = direccionCliente;
+        this.ciudadCliente = ciudadCliente;
+        this.pedidos = pedidos;
     }
 
-    public Long getId_Cliente() {
-        return id_Cliente;
+    public Long getIdCliente() {
+        return idCliente;
     }
 
-    public void setId_Cliente(Long id_Cliente) {
-        this.id_Cliente = id_Cliente;
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public String getNombre_cliente() {
-        return nombre_cliente;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setNombre_cliente(String nombre_cliente) {
-        this.nombre_cliente = nombre_cliente;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
-    public String getApellido_Cliente() {
-        return apellido_Cliente;
+    public String getApellidoCliente() {
+        return apellidoCliente;
     }
 
-    public void setApellido_Cliente(String apellido_Cliente) {
-        this.apellido_Cliente = apellido_Cliente;
+    public void setApellidoCliente(String apellidoCliente) {
+        this.apellidoCliente = apellidoCliente;
     }
 
-    public String getContrasena_Cliente() {
-        return contrasena_Cliente;
+    public String getContrasenaCliente() {
+        return contrasenaCliente;
     }
 
-    public void setContrasena_Cliente(String contrasena_Cliente) {
-        this.contrasena_Cliente = contrasena_Cliente;
+    public void setContrasenaCliente(String contrasenaCliente) {
+        this.contrasenaCliente = contrasenaCliente;
     }
 
-    public Long getTel_Cliente() {
-        return tel_Cliente;
+    public Long getTelCliente() {
+        return telCliente;
     }
 
-    public void setTel_Cliente(Long tel_Cliente) {
-        this.tel_Cliente = tel_Cliente;
+    public void setTelCliente(Long telCliente) {
+        this.telCliente = telCliente;
     }
 
     public String getCorreoCliente() {
@@ -109,22 +109,28 @@ public class cliente {
         this.correoCliente = correoCliente;
     }
 
-    public String getDireccion_Cliente() {
-        return direccion_Cliente;
+    public String getDireccionCliente() {
+        return direccionCliente;
     }
 
-    public void setDireccion_Cliente(String direccion_Cliente) {
-        this.direccion_Cliente = direccion_Cliente;
+    public void setDireccionCliente(String direccionCliente) {
+        this.direccionCliente = direccionCliente;
     }
 
-    public String getCiudad_Cliente() {
-        return ciudad_Cliente;
+    public String getCiudadCliente() {
+        return ciudadCliente;
     }
 
-    public void setCiudad_Cliente(String ciudad_Cliente) {
-        this.ciudad_Cliente = ciudad_Cliente;
+    public void setCiudadCliente(String ciudadCliente) {
+        this.ciudadCliente = ciudadCliente;
     }
 
+    public List<pedidos> getPedidos() {
+        return pedidos;
+    }
 
+    public void setPedidos(List<pedidos> pedidos) {
+        this.pedidos = pedidos;
+    }
 }
 

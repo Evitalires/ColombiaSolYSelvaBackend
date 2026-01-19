@@ -51,10 +51,10 @@ public class pedidosService implements IpedidosService{
 
         if (pedidoExistente != null) {
             //Actualizar los campos del pedido existente
-            pedidoExistente.setValor_Pedido(pedidoActualizado.getValor_Pedido());
-            pedidoExistente.setFecha_Pedido(pedidoActualizado.getFecha_Pedido());
-            pedidoExistente.setTransportadora_Pedido(pedidoActualizado.getTransportadora_Pedido());
-            pedidoExistente.setNo_Guia_Pedido(pedidoActualizado.getNo_Guia_Pedido());
+            pedidoExistente.setValorPedido(pedidoActualizado.getValorPedido());
+            pedidoExistente.setFechaPedido(pedidoActualizado.getFechaPedido());
+            pedidoExistente.setTransportadoraPedido(pedidoActualizado.getTransportadoraPedido());
+            pedidoExistente.setNoGuiaPedido(pedidoActualizado.getNoGuiaPedido());
 
             // Guardo el pedido actualizado
             pedidosRepository.save(pedidoExistente);

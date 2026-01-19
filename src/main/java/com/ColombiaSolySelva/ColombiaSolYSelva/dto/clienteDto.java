@@ -2,21 +2,21 @@ package com.ColombiaSolySelva.ColombiaSolYSelva.dto;
 
 public class clienteDto {
     private String correoCliente;
-    private String contrasena_Cliente;
+    private String contrasenaCliente;
 
     public String getcorreoCliente() {
         return correoCliente;
     }
 
-    public void setUsername(String username) {
+    public void setcorreoCliente(String correoCliente) {
         this.correoCliente = correoCliente;
     }
 
-    public String getcontrasena_Cliente() {
-        return contrasena_Cliente;
+    public String getcontrasenaCliente() {
+        return contrasenaCliente;
     }
 
-    public void setcontrasena_Cliente(String contrasena_Cliente) {
-        this.contrasena_Cliente = contrasena_Cliente;
+    public void setcontrasenaCliente(String contrasenaCliente) {
+        this.contrasenaCliente = contrasenaCliente;
     }
 }

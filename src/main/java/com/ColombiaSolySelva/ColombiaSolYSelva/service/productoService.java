@@ -43,11 +43,11 @@ public class productoService implements IproductoService{
 
         if (productoExistente != null) {
             //Actualizar los campos del producto existente
-            productoExistente.setNombre_Producto(productoActualizado.getNombre_Producto());
-            productoExistente.setPrecio_Producto(productoActualizado.getPrecio_Producto());
-            productoExistente.setDescripcion_Producto(productoActualizado.getDescripcion_Producto());
-            productoExistente.setCategoria_Producto(productoActualizado.getCategoria_Producto());
-            productoExistente.setStock_Producto(productoActualizado.getStock_Producto());
+            productoExistente.setNombreProducto(productoActualizado.getNombreProducto());
+            productoExistente.setPrecioProducto(productoActualizado.getPrecioProducto());
+            productoExistente.setDescripcionProducto(productoActualizado.getDescripcionProducto());
+            productoExistente.setCategoriaProducto(productoActualizado.getCategoriaProducto());
+            productoExistente.setStockProducto(productoActualizado.getStockProducto());
 
             // Guardo el producto actualziado
             productoRepository.save(productoExistente);

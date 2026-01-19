@@ -52,13 +52,13 @@ public class clienteService implements IclienteService, UserDetailsService {
 
         if (clienteExistente != null) {
             //Actualizar los campos del cliente existente
-            clienteExistente.setNombre_cliente(clienteActualizado.getNombre_cliente());
-            clienteExistente.setApellido_Cliente(clienteActualizado.getApellido_Cliente());
-            clienteExistente.setContrasena_Cliente(clienteActualizado.getContrasena_Cliente());
-            clienteExistente.setTel_Cliente(clienteActualizado.getTel_Cliente());
+            clienteExistente.setNombreCliente(clienteActualizado.getNombreCliente());
+            clienteExistente.setApellidoCliente(clienteActualizado.getApellidoCliente());
+            clienteExistente.setContrasenaCliente(clienteActualizado.getContrasenaCliente());
+            clienteExistente.setTelCliente(clienteActualizado.getTelCliente());
             clienteExistente.setCorreoCliente(clienteActualizado.getCorreoCliente());
-            clienteExistente.setDireccion_Cliente(clienteActualizado.getDireccion_Cliente());
-            clienteExistente.setCiudad_Cliente(clienteActualizado.getCiudad_Cliente());
+            clienteExistente.setDireccionCliente(clienteActualizado.getDireccionCliente());
+            clienteExistente.setCiudadCliente(clienteActualizado.getCiudadCliente());
 
             // Guardo el cliente actualziado
             clienteRepository.save(clienteExistente);
@@ -70,8 +70,8 @@ public class clienteService implements IclienteService, UserDetailsService {
     // Validar campos obligatorios
         public cliente registerCliente(cliente cliente) {
         // Validar campos obligatorios
-        if (cliente.getCorreoCliente() == null || cliente.getContrasena_Cliente() == null ||
-                cliente.getNombre_cliente() == null || cliente.getApellido_Cliente() == null) {
+        if (cliente.getCorreoCliente() == null || cliente.getContrasenaCliente() == null ||
+                cliente.getNombreCliente() == null || cliente.getApellidoCliente() == null) {
             throw new IllegalArgumentException("Todos los campos son obligatorios");
         }
 
@@ -82,9 +82,9 @@ public class clienteService implements IclienteService, UserDetailsService {
 
         cliente newUser = new cliente();
         newUser.setCorreoCliente(cliente.getCorreoCliente());
-        newUser.setContrasena_Cliente(passwordEncoder.encode(cliente.getContrasena_Cliente()));
-        newUser.setNombre_cliente(cliente.getNombre_cliente());
-        newUser.setApellido_Cliente(cliente.getApellido_Cliente());
+        newUser.setContrasenaCliente(passwordEncoder.encode(cliente.getContrasenaCliente()));
+        newUser.setNombreCliente(cliente.getNombreCliente());
+        newUser.setApellidoCliente(cliente.getApellidoCliente());
 
         return clienteRepository.save(newUser);
     }
@@ -95,7 +95,7 @@ public class clienteService implements IclienteService, UserDetailsService {
         if (cliente == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
-        return new org.springframework.security.core.userdetails.User(cliente.getCorreoCliente(), cliente.getContrasena_Cliente(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(cliente.getCorreoCliente(), cliente.getContrasenaCliente(), new ArrayList<>());
     }
 }
 

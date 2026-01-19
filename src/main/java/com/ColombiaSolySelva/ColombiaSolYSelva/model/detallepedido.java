@@ -8,13 +8,13 @@ import jakarta.validation.constraints.NotNull;
 public class detallepedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_DetallePedido;
+    private Long idDetallePedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Integer cantidad_DTPedido;
+    private Integer cantidadDTPedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Float subTotal_DTPedido;
+    private Float subTotalDTPedido;
 
     //MANY TO ONE: Muchos detalles de pedido pueden estar en un pedido
     @ManyToOne
@@ -31,35 +31,36 @@ public class detallepedido {
     public detallepedido() {
     }
 
-    public detallepedido(Long id_DetallePedido, Integer id_Producto_DTPedido, Integer id_pedido_DTPedido, Integer cantidad_DTPedido, Float subTotal_DTPedido) {
-        this.id_DetallePedido = id_DetallePedido;
-        this.cantidad_DTPedido = cantidad_DTPedido;
-        this.subTotal_DTPedido = subTotal_DTPedido;
-
+    public detallepedido(Long idDetallePedido, Integer cantidadDTPedido, Float subTotalDTPedido, pedidos pedido, producto producto) {
+        this.idDetallePedido = idDetallePedido;
+        this.cantidadDTPedido = cantidadDTPedido;
+        this.subTotalDTPedido = subTotalDTPedido;
+        this.pedido = pedido;
+        this.producto = producto;
     }
 
-    public Long getId_DetallePedido() {
-        return id_DetallePedido;
+    public Long getIdDetallePedido() {
+        return idDetallePedido;
     }
 
-    public void setId_DetallePedido(Long id_DetallePedido) {
-        this.id_DetallePedido = id_DetallePedido;
+    public void setIdDetallePedido(Long idDetallePedido) {
+        this.idDetallePedido = idDetallePedido;
     }
 
-    public Integer getCantidad_DTPedido() {
-        return cantidad_DTPedido;
+    public Integer getCantidadDTPedido() {
+        return cantidadDTPedido;
     }
 
-    public void setCantidad_DTPedido(Integer cantidad_DTPedido) {
-        this.cantidad_DTPedido = cantidad_DTPedido;
+    public void setCantidadDTPedido(Integer cantidadDTPedido) {
+        this.cantidadDTPedido = cantidadDTPedido;
     }
 
-    public Float getSubTotal_DTPedido() {
-        return subTotal_DTPedido;
+    public Float getSubTotalDTPedido() {
+        return subTotalDTPedido;
     }
 
-    public void setSubTotal_DTPedido(Float subTotal_DTPedido) {
-        this.subTotal_DTPedido = subTotal_DTPedido;
+    public void setSubTotalDTPedido(Float subTotalDTPedido) {
+        this.subTotalDTPedido = subTotalDTPedido;
     }
 
     public pedidos getPedido() {
