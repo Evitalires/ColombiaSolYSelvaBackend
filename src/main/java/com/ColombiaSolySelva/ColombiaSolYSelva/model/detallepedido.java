@@ -35,6 +35,7 @@ public class detallepedido {
         this.id_DetallePedido = id_DetallePedido;
         this.cantidad_DTPedido = cantidad_DTPedido;
         this.subTotal_DTPedido = subTotal_DTPedido;
+
     }
 
     public Long getId_DetallePedido() {

@@ -31,7 +31,8 @@ public class cliente {
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String correo_Cliente;
+    @Column(name="correo_Cliente")
+    private String correoCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
@@ -49,13 +50,13 @@ public class cliente {
     public cliente() {
     }
 
-    public cliente(Long id_Cliente, String nombre_cliente, String apellido_Cliente, String contrasena_Cliente, Long tel_Cliente, String correo_Cliente, String direccion_Cliente, String ciudad_Cliente) {
+    public cliente(Long id_Cliente, String nombre_cliente, String apellido_Cliente, String contrasena_Cliente, Long tel_Cliente, String correoCliente, String direccion_Cliente, String ciudad_Cliente) {
         this.id_Cliente = id_Cliente;
         this.nombre_cliente = nombre_cliente;
         this.apellido_Cliente = apellido_Cliente;
         this.contrasena_Cliente = contrasena_Cliente;
         this.tel_Cliente = tel_Cliente;
-        this.correo_Cliente = correo_Cliente;
+        this.correoCliente = correoCliente;
         this.direccion_Cliente = direccion_Cliente;
         this.ciudad_Cliente = ciudad_Cliente;
     }
@@ -100,12 +101,12 @@ public class cliente {
         this.tel_Cliente = tel_Cliente;
     }
 
-    public String getCorreo_Cliente() {
-        return correo_Cliente;
+    public String getCorreoCliente() {
+        return correoCliente;
     }
 
-    public void setCorreo_Cliente(String correo_Cliente) {
-        this.correo_Cliente = correo_Cliente;
+    public void setCorreoCliente(String correoCliente) {
+        this.correoCliente = correoCliente;
     }
 
     public String getDireccion_Cliente() {
