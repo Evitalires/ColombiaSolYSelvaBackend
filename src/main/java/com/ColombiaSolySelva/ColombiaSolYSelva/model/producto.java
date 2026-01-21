@@ -12,24 +12,24 @@ import java.util.List;
 public class producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Producto;
+    private Long idProducto;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=50)
-    private String nombre_Producto;
+    private String nombreProducto;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Float precio_Producto;
+    private Float precioProducto;
 
     @NotBlank(message="Campo no puede estar vacío")
-    private String descripcion_Producto;
+    private String descripcionProducto;
 
     @NotBlank(message="Campo no puede estar vacío")
     @Size(max=30)
-    private String categoria_Producto;
+    private String categoriaProducto;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Integer stock_Producto;
+    private Integer stockProducto;
 
     //ONE TO MANY: Un producto puede estar en varios detalles de pedido
     @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -40,60 +40,71 @@ public class producto {
     public producto() {
     }
 
-    public producto(Long id_Producto, String nombre_Producto, Float precio_Producto, String descripcion_Producto, String categoria_Producto, Integer stock_Producto) {
-        this.id_Producto = id_Producto;
-        this.nombre_Producto = nombre_Producto;
-        this.precio_Producto = precio_Producto;
-        this.descripcion_Producto = descripcion_Producto;
-        this.categoria_Producto = categoria_Producto;
-        this.stock_Producto = stock_Producto;
+    public Long getIdProducto() {
+        return idProducto;
     }
 
-    public Long getId_Producto() {
-        return id_Producto;
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 
-    public void setId_Producto(Long id_Producto) {
-        this.id_Producto = id_Producto;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public String getNombre_Producto() {
-        return nombre_Producto;
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
-    public void setNombre_Producto(String nombre_Producto) {
-        this.nombre_Producto = nombre_Producto;
+    public Float getPrecioProducto() {
+        return precioProducto;
     }
 
-    public Float getPrecio_Producto() {
-        return precio_Producto;
+    public void setPrecioProducto(Float precioProducto) {
+        this.precioProducto = precioProducto;
     }
 
-    public void setPrecio_Producto(Float precio_Producto) {
-        this.precio_Producto = precio_Producto;
+    public String getDescripcionProducto() {
+        return descripcionProducto;
     }
 
-    public String getDescripcion_Producto() {
-        return descripcion_Producto;
+    public void setDescripcionProducto(String descripcionProducto) {
+        this.descripcionProducto = descripcionProducto;
     }
 
-    public void setDescripcion_Producto(String descripcion_Producto) {
-        this.descripcion_Producto = descripcion_Producto;
+    public String getCategoriaProducto() {
+        return categoriaProducto;
     }
 
-    public String getCategoria_Producto() {
-        return categoria_Producto;
+    public void setCategoriaProducto(String categoriaProducto) {
+        this.categoriaProducto = categoriaProducto;
     }
 
-    public void setCategoria_Producto(String categoria_Producto) {
-        this.categoria_Producto = categoria_Producto;
+    public Integer getStockProducto() {
+        return stockProducto;
     }
 
-    public Integer getStock_Producto() {
-        return stock_Producto;
+    public void setStockProducto(Integer stockProducto) {
+        this.stockProducto = stockProducto;
     }
 
-    public void setStock_Producto(Integer stock_Producto) {
-        this.stock_Producto = stock_Producto;
+    public List<detallepedido> getDetallepedido() {
+        return detallepedido;
+    }
+
+    public void setDetallepedido(List<detallepedido> detallepedido) {
+        this.detallepedido = detallepedido;
+    }
+
+    public producto(Long idProducto, String nombreProducto, Float precioProducto, String descripcionProducto, String categoriaProducto, Integer stockProducto, List<detallepedido> detallepedido) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.precioProducto = precioProducto;
+        this.descripcionProducto = descripcionProducto;
+        this.categoriaProducto = categoriaProducto;
+        this.stockProducto = stockProducto;
+        this.detallepedido = detallepedido;
+
+
     }
 }
