@@ -23,7 +23,6 @@ public class cliente {
     private String apellidoCliente;
 
     @NotBlank(message="Campo no puede estar vacío")
-    @Size(max=50)
     private String contrasenaCliente;
 
     @NotNull(message="Campo no puede estar vacío")

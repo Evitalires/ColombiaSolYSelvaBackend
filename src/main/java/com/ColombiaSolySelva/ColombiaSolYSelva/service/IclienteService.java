@@ -11,4 +11,5 @@ public interface IclienteService {
     void guardarCliente(cliente cliente);
     void deleteCliente(Long id);
     void editarCliente(Long id, cliente clienteActualizado);
+    cliente buscarPorCorreo(String correoCliente);
 }

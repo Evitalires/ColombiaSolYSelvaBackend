@@ -4,19 +4,19 @@ public class clienteDto {
     private String correoCliente;
     private String contrasenaCliente;
 
-    public String getcorreoCliente() {
+    public String getCorreoCliente() {
         return correoCliente;
     }
 
-    public void setcorreoCliente(String correoCliente) {
+    public void setCorreoCliente(String correoCliente) {
         this.correoCliente = correoCliente;
     }
 
-    public String getcontrasenaCliente() {
+    public String getContrasenaCliente() {
         return contrasenaCliente;
     }
 
-    public void setcontrasenaCliente(String contrasenaCliente) {
+    public void setContrasenaCliente(String contrasenaCliente) {
         this.contrasenaCliente = contrasenaCliente;
     }
 }

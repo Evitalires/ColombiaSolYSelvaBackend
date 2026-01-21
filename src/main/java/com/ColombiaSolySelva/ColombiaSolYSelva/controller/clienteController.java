@@ -8,6 +8,7 @@ import com.ColombiaSolySelva.ColombiaSolYSelva.service.clienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,11 @@ public class clienteController {
 
     @PostMapping("/crear")
     public ResponseEntity<String> guardarCliente(@RequestBody cliente cliente){
+
+        cliente.setContrasenaCliente(
+                passwordEncoder.encode(cliente.getContrasenaCliente())
+        );
+
         clienteService.guardarCliente(cliente);
         return ResponseEntity.ok("Cliente agregado satisfactoriamente");
     }
@@ -62,8 +68,11 @@ public class clienteController {
 
     @PostMapping("/loginConDTO")
     public ResponseEntity<String> loginConDTO(@RequestBody clienteDto clienteDto) {
-        UserDetails userDetails = clienteService.loadUserByUsername(clienteDto.getcorreoCliente());
-        if (userDetails != null && passwordEncoder.matches(clienteDto.getcontrasenaCliente(), userDetails.getPassword())) {
+        String correo = clienteDto.getCorreoCliente();
+        String contrasena = clienteDto.getContrasenaCliente();
+
+        UserDetails userDetails = clienteService.loadUserByUsername(correo);
+        if (userDetails != null && passwordEncoder.matches(contrasena, userDetails.getPassword())) {
             String token = jwtUtil.generateToken(userDetails.getUsername());
             return ResponseEntity.ok(token);
         }
@@ -74,6 +83,13 @@ public class clienteController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> getProtectedResource() {
         return ResponseEntity.ok("Este es un recurso protegido!");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<cliente> obtenerUsuarioActual(Authentication authentication) {
+        String correo = authentication.getName();
+        cliente cliente = clienteService.buscarPorCorreo(correo);
+        return ResponseEntity.ok(cliente);
     }
 }
 
