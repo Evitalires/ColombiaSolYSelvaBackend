@@ -46,10 +46,6 @@ public class clienteService implements IclienteService, UserDetailsService {
         clienteRepository.deleteById(id);
     }
 
-
-
-
-
     @Override
     public void editarCliente(Long id, cliente clienteActualizado) {
         cliente clienteExistente = clienteRepository.findById(id).orElse(null);
@@ -62,10 +58,11 @@ public class clienteService implements IclienteService, UserDetailsService {
             clienteExistente.setCiudadCliente(clienteActualizado.getCiudadCliente());
             clienteExistente.setTelCliente(clienteActualizado.getTelCliente());
 
-
             // Solo actualizar contraseña si se envía un nuevo valor
-            if (clienteActualizado.getContrasenaCliente() != null && !clienteActualizado.getContrasenaCliente().isEmpty()) {
-                clienteExistente.setContrasenaCliente(passwordEncoder.encode(clienteActualizado.getContrasenaCliente()));
+            if (clienteActualizado.getContrasenaCliente() != null
+                    && !clienteActualizado.getContrasenaCliente().isEmpty()) {
+                clienteExistente
+                        .setContrasenaCliente(passwordEncoder.encode(clienteActualizado.getContrasenaCliente()));
             }
 
             clienteRepository.save(clienteExistente);
@@ -74,37 +71,31 @@ public class clienteService implements IclienteService, UserDetailsService {
         }
     }
 
-
-
-
-
-
-        public cliente registerCliente(cliente cliente) {
+    public cliente registerCliente(cliente cliente) {
         // Validar campos obligatorios
-            if (cliente.getNombreCliente() == null || cliente.getApellidoCliente() == null ||
-                    cliente.getDireccionCliente() == null || cliente.getCiudadCliente() == null ||
-                    cliente.getTelCliente() == null || cliente.getCorreoCliente() == null ||
-                    cliente.getContrasenaCliente() == null) {
-                throw new IllegalArgumentException("Todos los campos son obligatorios");
-            }
+        if (cliente.getNombreCliente() == null || cliente.getApellidoCliente() == null ||
+                cliente.getDireccionCliente() == null || cliente.getCiudadCliente() == null ||
+                cliente.getTelCliente() == null || cliente.getCorreoCliente() == null ||
+                cliente.getContrasenaCliente() == null) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
 
         // Verificar si el usuario ya existe
         if (clienteRepository.findBycorreoCliente(cliente.getCorreoCliente()) != null) {
-            throw new RuntimeException("El nombre de usuario ya existe");
+            throw new RuntimeException("Este correo electrónico ya está registrado");
         }
+
         cliente newUser = new cliente();
-            newUser.setNombreCliente(cliente.getNombreCliente());
-            newUser.setApellidoCliente(cliente.getApellidoCliente());
-            newUser.setDireccionCliente(cliente.getDireccionCliente());
-            newUser.setCiudadCliente(cliente.getCiudadCliente());
-            newUser.setTelCliente(cliente.getTelCliente());
-            newUser.setCorreoCliente(cliente.getCorreoCliente());
-            newUser.setContrasenaCliente(passwordEncoder.encode(cliente.getContrasenaCliente()));
+        newUser.setNombreCliente(cliente.getNombreCliente());
+        newUser.setApellidoCliente(cliente.getApellidoCliente());
+        newUser.setDireccionCliente(cliente.getDireccionCliente());
+        newUser.setCiudadCliente(cliente.getCiudadCliente());
+        newUser.setTelCliente(cliente.getTelCliente());
+        newUser.setCorreoCliente(cliente.getCorreoCliente());
+        newUser.setContrasenaCliente(passwordEncoder.encode(cliente.getContrasenaCliente()));
 
-            return clienteRepository.save(newUser);
+        return clienteRepository.save(newUser);
     }
-
-
 
     // Metodo de carga de usuario implementado desde UserDetailsService
     public UserDetails loadUserByUsername(String correoCliente) throws UsernameNotFoundException {
@@ -118,8 +109,7 @@ public class clienteService implements IclienteService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 cliente.getCorreoCliente(),
                 cliente.getContrasenaCliente(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER"))
-        );
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     public cliente buscarPorCorreo(String correo) {
@@ -130,6 +120,3 @@ public class clienteService implements IclienteService, UserDetailsService {
         return cliente;
     }
 }
-
-
-

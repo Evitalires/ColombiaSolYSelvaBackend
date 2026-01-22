@@ -1,6 +1,5 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva;
 
-
 import com.ColombiaSolySelva.ColombiaSolYSelva.service.clienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +39,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/cliente/login", "/cliente/crear", "/cliente/loginConDTO").permitAll()
+                        .requestMatchers("/producto/**").permitAll()
                         .requestMatchers("/cliente/me", "/cliente/editar/**").authenticated()
                         .anyRequest().authenticated())
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -62,7 +63,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -73,8 +75,7 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(clienteService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(clienteService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }

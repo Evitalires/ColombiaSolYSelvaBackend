@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class productoService implements IproductoService{
+public class productoService implements IproductoService {
     private final IproductoRepository productoRepository;
 
     @Autowired
@@ -42,15 +42,17 @@ public class productoService implements IproductoService{
         producto productoExistente = productoRepository.findById(id).orElse(null);
 
         if (productoExistente != null) {
-            //Actualizar los campos del producto existente
+            // Actualizar los campos del producto existente
             productoExistente.setNombreProducto(productoActualizado.getNombreProducto());
             productoExistente.setPrecioProducto(productoActualizado.getPrecioProducto());
             productoExistente.setDescripcionProducto(productoActualizado.getDescripcionProducto());
             productoExistente.setCategoriaProducto(productoActualizado.getCategoriaProducto());
             productoExistente.setStockProducto(productoActualizado.getStockProducto());
+            productoExistente.setImagenProducto(productoActualizado.getImagenProducto());
 
             // Guardo el producto actualziado
             productoRepository.save(productoExistente);
+
         } else {
             throw new RuntimeException("Producto no encontrado con el id: " + id);
         }

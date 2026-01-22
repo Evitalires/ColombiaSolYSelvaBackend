@@ -14,28 +14,30 @@ public class producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProducto;
 
-    @NotBlank(message="Campo no puede estar vacío")
-    @Size(max=50)
+    @NotBlank(message = "Campo no puede estar vacío")
+    @Size(max = 50)
     private String nombreProducto;
 
-    @NotNull(message="Campo no puede estar vacío")
+    @NotNull(message = "Campo no puede estar vacío")
     private Float precioProducto;
 
-    @NotBlank(message="Campo no puede estar vacío")
+    @NotBlank(message = "Campo no puede estar vacío")
     private String descripcionProducto;
 
-    @NotBlank(message="Campo no puede estar vacío")
-    @Size(max=30)
+    @NotBlank(message = "Campo no puede estar vacío")
+    @Size(max = 30)
     private String categoriaProducto;
 
-    @NotNull(message="Campo no puede estar vacío")
+    @NotNull(message = "Campo no puede estar vacío")
     private Integer stockProducto;
 
-    //ONE TO MANY: Un producto puede estar en varios detalles de pedido
-    @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL, orphanRemoval = true)
+    @NotBlank(message = "Campo no puede estar vacío")
+    private String imagenProducto;
+
+    // ONE TO MANY: Un producto puede estar en varios detalles de pedido
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<detallepedido> detallepedido;
-
 
     public producto() {
     }
@@ -88,6 +90,14 @@ public class producto {
         this.stockProducto = stockProducto;
     }
 
+    public String getImagenProducto() {
+        return imagenProducto;
+    }
+
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
+    }
+
     public List<detallepedido> getDetallepedido() {
         return detallepedido;
     }
@@ -96,15 +106,15 @@ public class producto {
         this.detallepedido = detallepedido;
     }
 
-    public producto(Long idProducto, String nombreProducto, Float precioProducto, String descripcionProducto, String categoriaProducto, Integer stockProducto, List<detallepedido> detallepedido) {
+    public producto(Long idProducto, String nombreProducto, Float precioProducto, String descripcionProducto,
+            String categoriaProducto, Integer stockProducto, String imagenProducto, List<detallepedido> detallepedido) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.precioProducto = precioProducto;
         this.descripcionProducto = descripcionProducto;
         this.categoriaProducto = categoriaProducto;
         this.stockProducto = stockProducto;
+        this.imagenProducto = imagenProducto;
         this.detallepedido = detallepedido;
-
-
     }
 }
