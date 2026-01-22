@@ -30,6 +30,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain chain)
             throws ServletException, IOException {
 
+
+        // Rutas públicas que no requieren JWT
+        String path = request.getRequestURI();
+        if (path.equals("/cliente/crear") || path.equals("/cliente/login") || path.equals("/cliente/loginConDTO")) {
+            chain.doFilter(request, response);
+            return; // SALTA el filtro para estas rutas
+        }
+
+
+
+
         final String authorizationHeader = request.getHeader("Authorization");
 
         String username = null;

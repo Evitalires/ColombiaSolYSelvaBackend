@@ -46,50 +46,67 @@ public class clienteService implements IclienteService, UserDetailsService {
         clienteRepository.deleteById(id);
     }
 
+
+
+
+
     @Override
     public void editarCliente(Long id, cliente clienteActualizado) {
         cliente clienteExistente = clienteRepository.findById(id).orElse(null);
 
         if (clienteExistente != null) {
-            //Actualizar los campos del cliente existente
+            // Actualizar campos en el mismo orden que el formulario
             clienteExistente.setNombreCliente(clienteActualizado.getNombreCliente());
             clienteExistente.setApellidoCliente(clienteActualizado.getApellidoCliente());
-            clienteExistente.setContrasenaCliente(clienteActualizado.getContrasenaCliente());
-            clienteExistente.setTelCliente(clienteActualizado.getTelCliente());
-            clienteExistente.setCorreoCliente(clienteActualizado.getCorreoCliente());
             clienteExistente.setDireccionCliente(clienteActualizado.getDireccionCliente());
             clienteExistente.setCiudadCliente(clienteActualizado.getCiudadCliente());
+            clienteExistente.setTelCliente(clienteActualizado.getTelCliente());
 
-            // Guardo el cliente actualziado
+
+            // Solo actualizar contraseña si se envía un nuevo valor
+            if (clienteActualizado.getContrasenaCliente() != null && !clienteActualizado.getContrasenaCliente().isEmpty()) {
+                clienteExistente.setContrasenaCliente(passwordEncoder.encode(clienteActualizado.getContrasenaCliente()));
+            }
+
             clienteRepository.save(clienteExistente);
         } else {
             throw new RuntimeException("Cliente no encontrado con el id: " + id);
         }
     }
 
-    // Validar campos obligatorios
+
+
+
+
+
         public cliente registerCliente(cliente cliente) {
         // Validar campos obligatorios
-        if (cliente.getCorreoCliente() == null || cliente.getContrasenaCliente() == null ||
-                cliente.getNombreCliente() == null || cliente.getApellidoCliente() == null) {
-            throw new IllegalArgumentException("Todos los campos son obligatorios");
-        }
+            if (cliente.getNombreCliente() == null || cliente.getApellidoCliente() == null ||
+                    cliente.getDireccionCliente() == null || cliente.getCiudadCliente() == null ||
+                    cliente.getTelCliente() == null || cliente.getCorreoCliente() == null ||
+                    cliente.getContrasenaCliente() == null) {
+                throw new IllegalArgumentException("Todos los campos son obligatorios");
+            }
 
         // Verificar si el usuario ya existe
         if (clienteRepository.findBycorreoCliente(cliente.getCorreoCliente()) != null) {
             throw new RuntimeException("El nombre de usuario ya existe");
         }
-
         cliente newUser = new cliente();
-        newUser.setCorreoCliente(cliente.getCorreoCliente());
-        newUser.setContrasenaCliente(passwordEncoder.encode(cliente.getContrasenaCliente()));
-        newUser.setNombreCliente(cliente.getNombreCliente());
-        newUser.setApellidoCliente(cliente.getApellidoCliente());
+            newUser.setNombreCliente(cliente.getNombreCliente());
+            newUser.setApellidoCliente(cliente.getApellidoCliente());
+            newUser.setDireccionCliente(cliente.getDireccionCliente());
+            newUser.setCiudadCliente(cliente.getCiudadCliente());
+            newUser.setTelCliente(cliente.getTelCliente());
+            newUser.setCorreoCliente(cliente.getCorreoCliente());
+            newUser.setContrasenaCliente(passwordEncoder.encode(cliente.getContrasenaCliente()));
 
-        return clienteRepository.save(newUser);
+            return clienteRepository.save(newUser);
     }
 
-    // Métdo de carga de usuario implementado desde UserDetailsService
+
+
+    // Metodo de carga de usuario implementado desde UserDetailsService
     public UserDetails loadUserByUsername(String correoCliente) throws UsernameNotFoundException {
         if (correoCliente == null || correoCliente.trim().isEmpty()) {
             throw new UsernameNotFoundException("El correo no puede estar vacío.");

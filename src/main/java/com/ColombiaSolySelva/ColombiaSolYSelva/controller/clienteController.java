@@ -43,16 +43,22 @@ public class clienteController {
         return clienteService.obtenerPorId(id);
     }
 
+
+
+
     @PostMapping("/crear")
-    public ResponseEntity<String> guardarCliente(@RequestBody cliente cliente){
-
-        cliente.setContrasenaCliente(
-                passwordEncoder.encode(cliente.getContrasenaCliente())
-        );
-
-        clienteService.guardarCliente(cliente);
-        return ResponseEntity.ok("Cliente agregado satisfactoriamente");
+    public ResponseEntity<?> crearCliente(@RequestBody cliente cliente){
+        try {
+            cliente registrado = clienteService.registerCliente(cliente);
+            return ResponseEntity.ok(registrado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
+
+
+
 
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> deleteCliente(@PathVariable Long id){
