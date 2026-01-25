@@ -40,6 +40,9 @@ public class cliente {
     @Size(max=50)
     private String ciudadCliente;
 
+    @Size(max=100)
+    private String imagenCliente;
+
     // ONE TO MANY: Un cliente puede tener muchos pedidos
     @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference ("cliente-pedido")
@@ -48,7 +51,7 @@ public class cliente {
     public cliente() {
     }
 
-    public cliente(Long idCliente, String nombreCliente, String apellidoCliente, String contrasenaCliente, Long telCliente, String correoCliente, String direccionCliente, String ciudadCliente, List<pedidos> pedidos) {
+    public cliente(Long idCliente, String nombreCliente, String apellidoCliente, String contrasenaCliente, Long telCliente, String correoCliente, String direccionCliente, String ciudadCliente, String imagenCliente, List<pedidos> pedidos) {
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.apellidoCliente = apellidoCliente;
@@ -57,6 +60,7 @@ public class cliente {
         this.correoCliente = correoCliente;
         this.direccionCliente = direccionCliente;
         this.ciudadCliente = ciudadCliente;
+        this.imagenCliente = imagenCliente;
         this.pedidos = pedidos;
     }
 
@@ -122,6 +126,14 @@ public class cliente {
 
     public void setCiudadCliente(String ciudadCliente) {
         this.ciudadCliente = ciudadCliente;
+    }
+
+    public String getImagenCliente() {
+        return imagenCliente;
+    }
+
+    public void setImagenCliente(String imagenCliente) {
+        this.imagenCliente = imagenCliente;
     }
 
     public List<pedidos> getPedidos() {

@@ -93,6 +93,13 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.0.0-jre</version> <!-- usa la última versión estable -->
+        </dependency>
+
 	</dependencies>
 
 	<build>

@@ -40,7 +40,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/cliente/login", "/cliente/crear", "/cliente/loginConDTO").permitAll()
                         .requestMatchers("/producto/**").permitAll()
-                        .requestMatchers("/cliente/me", "/cliente/editar/**").authenticated()
+                        .requestMatchers("/IMG/**").permitAll()
+                        .requestMatchers("/cliente/me", "/cliente/editar/**", "/cliente/foto/**").authenticated()
+                        .requestMatchers("/cliente/cambiar-contrasena").authenticated()
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session
