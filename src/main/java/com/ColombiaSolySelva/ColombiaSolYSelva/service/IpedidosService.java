@@ -34,4 +34,5 @@ public interface IpedidosService {
     Optional<pedidos> obtenerPorId(Long id);
 
     List<pedidos> obtenerTodos();
+    pedidos guardarPedido(pedidos pedido);
 }

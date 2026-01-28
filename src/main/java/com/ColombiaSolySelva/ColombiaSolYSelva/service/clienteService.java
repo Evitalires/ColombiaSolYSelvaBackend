@@ -9,7 +9,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,4 +123,66 @@ public class clienteService implements IclienteService, UserDetailsService {
         }
         return cliente;
     }
+
+
+
+
+    //para edicion de archivos foto perfil -> proyecto backend y bd
+
+    public String guardarFotoPerfil(Long id, MultipartFile foto) throws IOException {
+        String carpeta = "uploads/imgPerfiles/";
+        String nombreArchivo = "perfil_" + id + "_" + foto.getOriginalFilename();
+        Path ruta = Paths.get(carpeta + nombreArchivo);
+        Files.write(ruta, foto.getBytes());
+        return nombreArchivo;
+    }
+
+    public void actualizarImagenCliente(Long id, String nombreArchivo) {
+        cliente cliente = clienteRepository.findById(id).orElseThrow();
+        cliente.setImagenCliente(nombreArchivo);
+        clienteRepository.save(cliente);
+    }
+
+    public String obtenerNombreFoto(Long id) {
+        cliente cliente = clienteRepository.findById(id).orElseThrow();
+        return cliente.getImagenCliente(); // devuelve el nombre del archivo guardado en BD
+    }
+
+
+
+    public void eliminarFotoPerfil(Long id) throws IOException {
+        cliente cliente = clienteRepository.findById(id).orElseThrow();
+        if(cliente.getImagenCliente() != null){
+            Path ruta = Paths.get("uploads/imgPerfiles/" + cliente.getImagenCliente());
+            Files.deleteIfExists(ruta);
+            cliente.setImagenCliente(null);
+            clienteRepository.save(cliente);
+        }
+    }
+
+
+
+    // Nuevo metodo que busca al cliente por correo (lo trae del JWT)
+    public void cambiarContrasenaPorCorreo(String correo, String actual, String nueva, String confirmar) {
+        // Buscar cliente en la BD por correo
+        cliente c = clienteRepository.findBycorreoCliente(correo);
+        if (c == null) {
+            throw new RuntimeException("Cliente no encontrado");
+        }
+
+        // Validar contraseña actual contra el hash en BD
+        if (!passwordEncoder.matches(actual, c.getContrasenaCliente())) {
+            throw new RuntimeException("La contraseña actual es incorrecta");
+        }
+
+        // Validar que nueva y confirmar coincidan
+        if (!nueva.equals(confirmar)) {
+            throw new RuntimeException("La nueva contraseña no coincide con la confirmación");
+        }
+
+        // Guardar nueva contraseña cifrada en el mismo campo contrasenaCliente
+        c.setContrasenaCliente(passwordEncoder.encode(nueva));
+        clienteRepository.save(c);
+    }
+
 }

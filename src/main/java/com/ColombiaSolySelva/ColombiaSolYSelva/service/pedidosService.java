@@ -51,7 +51,6 @@ public class pedidosService implements IpedidosService {
             Authentication auth,
             List<CarritoDTO> carrito
     ) {
-
         cliente cliente = obtenerClienteDesdeAuth(auth);
 
         // 1️⃣ Crear pedido base
@@ -62,19 +61,21 @@ public class pedidosService implements IpedidosService {
         pedido.setNoGuiaPedido("SIN_GUIA");
         pedido.setTransportadoraPedido("POR_ASIGNAR");
 
+        // ⚠️ Inicializar valorPedido para evitar error de validación
+        pedido.setValorPedido(BigDecimal.ZERO);
+
+        // 2️⃣ Guardar pedido para generar ID y poder relacionar detalles
         pedido = pedidosRepository.save(pedido);
 
-        // 2️⃣ Crear detalles
-        detallepedidoService.crearDetallesDesdeCarrito(
-                pedido,
-                cliente,
-                carrito
-        );
+        // 3️⃣ Crear detalles del pedido
+        detallepedidoService.crearDetallesDesdeCarrito(pedido, cliente, carrito);
 
-        // 3️⃣ Calcular total desde detalles
-        calcularTotalPedido(pedido);
+        // 4️⃣ Calcular total desde los detalles
+        BigDecimal total = calcularTotalPedido(pedido);
+        pedido.setValorPedido(total);
 
-        return pedido;
+        // 5️⃣ Guardar cambios finales
+        return pedidosRepository.save(pedido);
     }
 
     // =========================
@@ -90,9 +91,6 @@ public class pedidosService implements IpedidosService {
         for (detallepedido d : detalles) {
             total = total.add(d.getSubTotalDTPedido());
         }
-
-        pedido.setValorPedido(total);
-        pedidosRepository.save(pedido);
 
         return total;
     }
@@ -186,5 +184,9 @@ public class pedidosService implements IpedidosService {
     @Override
     public List<pedidos> obtenerTodos() {
         return pedidosRepository.findAll();
+    }
+
+    public pedidos guardarPedido(pedidos pedido) {
+        return pedidosRepository.save(pedido);
     }
 }

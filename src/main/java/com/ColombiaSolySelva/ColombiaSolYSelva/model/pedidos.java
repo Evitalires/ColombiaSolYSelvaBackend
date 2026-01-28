@@ -33,6 +33,15 @@ public class pedidos {
     @JsonProperty("no_Guia_Pedido")
     private String NoGuiaPedido;
 
+    @Column(name = "direccion_pedido")
+    private String direccionPedido;
+
+    @Column(name = "ciudad_pedido")
+    private String ciudadPedido;
+
+    @Column(name = "metodo_pago")
+    private String metodoPago;
+
     //MANY TO ONE: Muchos pedidos pueden ser hechos por un cliente
     @ManyToOne
     @JoinColumn(name="id_FK_Cliente_Pedido")
@@ -52,40 +61,19 @@ public class pedidos {
     public pedidos() {
     }
 
-    public pedidos(Long idPedido, BigDecimal valorPedido, Date fechaPedido, String transportadoraPedido, String noGuiaPedido, cliente cliente, List<detallepedido> detallepedido, String mpPreferenceId, String mpPaymentId, String estadoPago) {
+    public pedidos(Long idPedido, BigDecimal valorPedido, Date fechaPedido, String transportadoraPedido, String noGuiaPedido, String direccionPedido, String ciudadPedido, String metodoPago, cliente cliente, List<detallepedido> detallepedido, String mpPreferenceId, String mpPaymentId, String estadoPago) {
         this.idPedido = idPedido;
         this.valorPedido = valorPedido;
         this.fechaPedido = fechaPedido;
         this.transportadoraPedido = transportadoraPedido;
         NoGuiaPedido = noGuiaPedido;
+        this.direccionPedido = direccionPedido;
+        this.ciudadPedido = ciudadPedido;
+        this.metodoPago = metodoPago;
         this.cliente = cliente;
         this.detallepedido = detallepedido;
         this.mpPreferenceId = mpPreferenceId;
         this.mpPaymentId = mpPaymentId;
-        this.estadoPago = estadoPago;
-    }
-
-    public String getMpPreferenceId() {
-        return mpPreferenceId;
-    }
-
-    public void setMpPreferenceId(String mpPreferenceId) {
-        this.mpPreferenceId = mpPreferenceId;
-    }
-
-    public String getMpPaymentId() {
-        return mpPaymentId;
-    }
-
-    public void setMpPaymentId(String mpPaymentId) {
-        this.mpPaymentId = mpPaymentId;
-    }
-
-    public String getEstadoPago() {
-        return estadoPago;
-    }
-
-    public void setEstadoPago(String estadoPago) {
         this.estadoPago = estadoPago;
     }
 
@@ -129,6 +117,30 @@ public class pedidos {
         NoGuiaPedido = noGuiaPedido;
     }
 
+    public String getDireccionPedido() {
+        return direccionPedido;
+    }
+
+    public void setDireccionPedido(String direccionPedido) {
+        this.direccionPedido = direccionPedido;
+    }
+
+    public String getCiudadPedido() {
+        return ciudadPedido;
+    }
+
+    public void setCiudadPedido(String ciudadPedido) {
+        this.ciudadPedido = ciudadPedido;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
     public cliente getCliente() {
         return cliente;
     }
@@ -143,5 +155,29 @@ public class pedidos {
 
     public void setDetallepedido(List<detallepedido> detallepedido) {
         this.detallepedido = detallepedido;
+    }
+
+    public String getMpPreferenceId() {
+        return mpPreferenceId;
+    }
+
+    public void setMpPreferenceId(String mpPreferenceId) {
+        this.mpPreferenceId = mpPreferenceId;
+    }
+
+    public String getMpPaymentId() {
+        return mpPaymentId;
+    }
+
+    public void setMpPaymentId(String mpPaymentId) {
+        this.mpPaymentId = mpPaymentId;
+    }
+
+    public String getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(String estadoPago) {
+        this.estadoPago = estadoPago;
     }
 }

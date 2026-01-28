@@ -20,5 +20,18 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/IMG/imgProductos/**")
                 .addResourceLocations("file:" + uploadPath + "/");
+
+
+        // Mapeamos la URL /IMG/** a la carpeta física dentro del proyecto
+        // Fotos de perfil dinámicas
+        String uploadPathPerfiles = Paths.get("uploads/imgPerfiles")
+                .toFile().getAbsolutePath();
+        registry.addResourceHandler("/IMG/imgPerfiles/**")            // lo que ve el navegador
+                .addResourceLocations("file:" + uploadPathPerfiles + "/");         // carpeta real en el proyecto
+
+
     }
+
+
+
 }

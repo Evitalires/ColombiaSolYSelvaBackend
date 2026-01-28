@@ -1,5 +1,6 @@
 package com.ColombiaSolySelva.ColombiaSolYSelva.controller;
 
+import com.ColombiaSolySelva.ColombiaSolYSelva.dto.CheckoutRequest;
 import com.ColombiaSolySelva.ColombiaSolYSelva.model.cliente;
 import com.ColombiaSolySelva.ColombiaSolYSelva.model.detallepedido;
 import com.ColombiaSolySelva.ColombiaSolYSelva.model.pedidos;
@@ -54,6 +55,22 @@ public class pedidosController {
     public ResponseEntity<String> estadoPedido(@PathVariable Long idPedido) {
         String estado = pedidosService.obtenerEstadoPedido(idPedido);
         return ResponseEntity.ok(estado);
+    }
+
+    @PostMapping("/crear")
+    public ResponseEntity<pedidos> crearPedido(
+            @RequestBody CheckoutRequest checkoutRequest,
+            Authentication auth) {
+
+        // Crear el pedido usando tu servicio
+        pedidos pedido = pedidosService.crearPedidoDesdeCarrito(auth, checkoutRequest.getCarrito());
+        pedido.setDireccionPedido(checkoutRequest.getDireccion());
+        pedido.setCiudadPedido(checkoutRequest.getCiudad());
+        pedido.setMetodoPago(checkoutRequest.getMetodoPago());
+
+        pedidosService.guardarPedido(pedido); // Guarda los cambios
+
+        return ResponseEntity.ok(pedido);
     }
 }
 
