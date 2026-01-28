@@ -15,15 +15,14 @@ import java.util.Optional;
 
 @Service
 public class clienteService implements IclienteService, UserDetailsService {
-    @Autowired
+
     private final IclienteRepository clienteRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public clienteService(IclienteRepository iclienteRepository) {
+    public clienteService(IclienteRepository iclienteRepository, PasswordEncoder passwordEncoder) {
         this.clienteRepository = iclienteRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

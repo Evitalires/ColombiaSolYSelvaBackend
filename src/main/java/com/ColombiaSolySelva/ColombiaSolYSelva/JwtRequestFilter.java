@@ -25,59 +25,72 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
 
+        // 🔎 LOG para confirmar que el filtro corre
+        System.out.println("🟢 JwtRequestFilter ejecutándose en: " + request.getRequestURI());
 
-        // Rutas públicas que no requieren JWT
-        String path = request.getRequestURI();
-        if (path.equals("/cliente/crear") || path.equals("/cliente/login") || path.equals("/cliente/loginConDTO")) {
-            chain.doFilter(request, response);
-            return; // SALTA el filtro para estas rutas
+        final String authHeader = request.getHeader("Authorization");
+
+        // Si no hay header o no empieza por Bearer, continúa sin autenticar
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
+        String jwt = authHeader.substring(7);
 
+        try {
+            String username = jwtUtil.extractUsername(jwt);
 
+            if (username != null &&
+                    SecurityContextHolder.getContext().getAuthentication() == null) {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+                UserDetails userDetails =
+                        clienteService.loadUserByUsername(username);
 
-        String username = null;
-        String jwt = null;
+                if (jwtUtil.validateToken(jwt, userDetails)) {
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            try {
-                username = jwtUtil.extractUsername(jwt);
-            } catch (Exception e) {
-                chain.doFilter(request, response);
-                return;
+                    System.out.println("✅ TOKEN VÁLIDO para usuario: " + username);
+
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+
+                    // 🔥 LÍNEA CLAVE (SIN ESTO HAY 403)
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
+                    );
+
+                    SecurityContextHolder.getContext()
+                            .setAuthentication(authToken);
+                } else {
+                    System.out.println("❌ TOKEN INVÁLIDO");
+                    System.out.println("🔍 Authorities del usuario: " + userDetails.getAuthorities());
+                    System.out.println("🔍 Authentication seteada correctamente");
+                }
             }
+
+        } catch (Exception e) {
+            System.out.println("❌ Error procesando JWT: " + e.getMessage());
+            // No bloqueamos, dejamos que Security decida
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        if (username != null &&
-                SecurityContextHolder.getContext().getAuthentication() == null) {
+        filterChain.doFilter(request, response);
+    }
 
-            UserDetails userDetails =
-                    clienteService.loadUserByUsername(username);
-
-            if (jwtUtil.validateToken(jwt, userDetails)) {
-
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities());
-
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
-        }
-
-        chain.doFilter(request, response);
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getMethod().equalsIgnoreCase("OPTIONS");
     }
 }

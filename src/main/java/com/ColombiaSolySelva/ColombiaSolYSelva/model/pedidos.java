@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class pedidos {
     private Long idPedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Float valorPedido;
+    private BigDecimal valorPedido;
 
     @NotNull(message="Campo no puede estar vacío")
     private Date fechaPedido;
@@ -43,10 +44,15 @@ public class pedidos {
     @JsonManagedReference ("pedido-detalle")
     private List<detallepedido> detallepedido;
 
+    //MercadoPago
+    private String mpPreferenceId;
+    private String mpPaymentId;
+    private String estadoPago;
+
     public pedidos() {
     }
 
-    public pedidos(Long idPedido, Float valorPedido, Date fechaPedido, String transportadoraPedido, String noGuiaPedido, cliente cliente, List<detallepedido> detallepedido) {
+    public pedidos(Long idPedido, BigDecimal valorPedido, Date fechaPedido, String transportadoraPedido, String noGuiaPedido, cliente cliente, List<detallepedido> detallepedido, String mpPreferenceId, String mpPaymentId, String estadoPago) {
         this.idPedido = idPedido;
         this.valorPedido = valorPedido;
         this.fechaPedido = fechaPedido;
@@ -54,6 +60,33 @@ public class pedidos {
         NoGuiaPedido = noGuiaPedido;
         this.cliente = cliente;
         this.detallepedido = detallepedido;
+        this.mpPreferenceId = mpPreferenceId;
+        this.mpPaymentId = mpPaymentId;
+        this.estadoPago = estadoPago;
+    }
+
+    public String getMpPreferenceId() {
+        return mpPreferenceId;
+    }
+
+    public void setMpPreferenceId(String mpPreferenceId) {
+        this.mpPreferenceId = mpPreferenceId;
+    }
+
+    public String getMpPaymentId() {
+        return mpPaymentId;
+    }
+
+    public void setMpPaymentId(String mpPaymentId) {
+        this.mpPaymentId = mpPaymentId;
+    }
+
+    public String getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(String estadoPago) {
+        this.estadoPago = estadoPago;
     }
 
     public Long getIdPedido() {
@@ -64,11 +97,11 @@ public class pedidos {
         this.idPedido = idPedido;
     }
 
-    public Float getValorPedido() {
+    public BigDecimal getValorPedido() {
         return valorPedido;
     }
 
-    public void setValorPedido(Float valorPedido) {
+    public void setValorPedido(BigDecimal valorPedido) {
         this.valorPedido = valorPedido;
     }
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -128,7 +129,7 @@ public class DataLoader implements CommandLineRunner {
             "descripcion": "Cuadro pintado a mano con motivos abstractos, ideal para decorar cualquier espacio",
             "categoria": "Arte y Recuerdos",
             "stock": 10,
-            "imagen": "backend/src/main/resources/static/IMG/imgProductos/cuadroAbstracto.jpg"
+            "imagen": "backend/src/main/resources/static/IMG/imgProductos/cuadroAbstracto.png"
           },
           {
             "id": 12,
@@ -185,7 +186,7 @@ public class DataLoader implements CommandLineRunner {
       for (Map<String, Object> map : productosJson) {
         producto p = new producto();
         p.setNombreProducto((String) map.get("nombre"));
-        p.setPrecioProducto(((Number) map.get("precio")).floatValue());
+        p.setPrecioProducto(new BigDecimal(map.get("precio").toString()));
         p.setDescripcionProducto((String) map.get("descripcion"));
         p.setCategoriaProducto((String) map.get("categoria"));
         p.setStockProducto(((Number) map.get("stock")).intValue());

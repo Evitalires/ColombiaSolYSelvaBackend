@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 @Entity
 public class detallepedido {
     @Id
@@ -14,7 +16,7 @@ public class detallepedido {
     private Integer cantidadDTPedido;
 
     @NotNull(message="Campo no puede estar vacío")
-    private Float subTotalDTPedido;
+    private BigDecimal subTotalDTPedido;
 
     //MANY TO ONE: Muchos detalles de pedido pueden estar en un pedido
     @ManyToOne
@@ -31,7 +33,7 @@ public class detallepedido {
     public detallepedido() {
     }
 
-    public detallepedido(Long idDetallePedido, Integer cantidadDTPedido, Float subTotalDTPedido, pedidos pedido, producto producto) {
+    public detallepedido(Long idDetallePedido, Integer cantidadDTPedido, BigDecimal subTotalDTPedido, pedidos pedido, producto producto) {
         this.idDetallePedido = idDetallePedido;
         this.cantidadDTPedido = cantidadDTPedido;
         this.subTotalDTPedido = subTotalDTPedido;
@@ -55,12 +57,18 @@ public class detallepedido {
         this.cantidadDTPedido = cantidadDTPedido;
     }
 
-    public Float getSubTotalDTPedido() {
+    public BigDecimal getSubTotalDTPedido() {
         return subTotalDTPedido;
     }
 
-    public void setSubTotalDTPedido(Float subTotalDTPedido) {
-        this.subTotalDTPedido = subTotalDTPedido;
+    public void calcularSubTotal() {
+        if (producto == null || producto.getPrecioProducto() == null || cantidadDTPedido == null) {
+            this.subTotalDTPedido = BigDecimal.ZERO;
+            return;
+        }
+
+        this.subTotalDTPedido = producto.getPrecioProducto()
+                .multiply(BigDecimal.valueOf(cantidadDTPedido));
     }
 
     public pedidos getPedido() {

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -19,7 +21,8 @@ public class producto {
     private String nombreProducto;
 
     @NotNull(message = "Campo no puede estar vacío")
-    private Float precioProducto;
+    @Positive
+    private BigDecimal precioProducto;
 
     @NotBlank(message = "Campo no puede estar vacío")
     private String descripcionProducto;
@@ -29,6 +32,7 @@ public class producto {
     private String categoriaProducto;
 
     @NotNull(message = "Campo no puede estar vacío")
+    @Positive
     private Integer stockProducto;
 
     @NotBlank(message = "Campo no puede estar vacío")
@@ -58,11 +62,11 @@ public class producto {
         this.nombreProducto = nombreProducto;
     }
 
-    public Float getPrecioProducto() {
+    public BigDecimal getPrecioProducto() {
         return precioProducto;
     }
 
-    public void setPrecioProducto(Float precioProducto) {
+    public void setPrecioProducto(BigDecimal precioProducto) {
         this.precioProducto = precioProducto;
     }
 
@@ -106,7 +110,7 @@ public class producto {
         this.detallepedido = detallepedido;
     }
 
-    public producto(Long idProducto, String nombreProducto, Float precioProducto, String descripcionProducto,
+    public producto(Long idProducto, String nombreProducto, BigDecimal precioProducto, String descripcionProducto,
             String categoriaProducto, Integer stockProducto, String imagenProducto, List<detallepedido> detallepedido) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;

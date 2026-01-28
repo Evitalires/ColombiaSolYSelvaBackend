@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,15 +29,15 @@ public class productoController {
         return productoService.obtenerTodos();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public Optional<producto> obtenerPorId(@PathVariable Long id) {
         return productoService.obtenerPorId(id);
     }
 
-    @PostMapping(value = "/crear", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/crear-producto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<producto> crearProducto(
             @RequestParam("nombre") String nombre,
-            @RequestParam("precio") Float precio,
+            @RequestParam("precio") BigDecimal precio,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("categoria") String categoria,
             @RequestParam("stock") Integer stock,

@@ -44,7 +44,7 @@ public class productoService implements IproductoService {
 
         Files.copy(archivo.getInputStream(), rutaArchivo);
 
-        return "static/IMG/imgProductos/" + nuevoNombre;
+        return "backend/src/main/resources/static/IMG/imgProductos/" + nuevoNombre;
     }
 
     @Override
